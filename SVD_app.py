@@ -1,16 +1,31 @@
 import openpyxl
 import csv
 from openpyxl import load_workbook
+from openpyxl.styles.fills import PatternFill
 import xlsxwriter
+from openpyxl.styles import Font, Color, colors, Fill 
 
 Title = []
 IssueType = []
 ComponentVariant = []
 DRNumber = []
+IssueKey = []
 
 numberOfRows = 0
 
 
+#Styling
+##def style():
+##    wb = load_workbook('template_out.xlsx')
+##    ws = wb.active
+##   
+    ##fill = PatternFill(fill_type = 'solid',
+##                    ##start_color = 'f88379',
+##                   ## end_color = 'f88379')
+##    cell_range = ws['A1':'L1']
+##    cell_range.PatternFill(fill_type = 'solid',
+##                    start_color = 'f88379',
+ ##                   end_color = 'f88379') 
 #caluculate max number of rows in excel sheet for later functions
 def calcNumberOfRows():
     global numberOfRows
@@ -41,7 +56,7 @@ def create_Template():
     ws = wb.active
     ws['A1'] = "Type"
     ws['B1'] = "DR Number"
-    ws['C1'] = "Internal ID"
+    ws['C1'] = "Jira Issue Key"
     ws['D1'] = "Component"
     ws['E1'] = "CVV Build #"
     ws['F1'] = "Title"
@@ -130,6 +145,25 @@ def writeDRNumberToTemplate():
     wb.save('template_out.xlsx')
 
 
+##Writing issueKey from export to IssueKey Array
+def readToIssueKey():
+    wb = load_workbook(filename = 'file.xlsx')
+    ws = wb.active
+    for col in ws.iter_cols(min_row=2,min_col = 2, max_col=2, max_row=numberOfRows+1, values_only = True):
+        for cell in col:
+            IssueKey.append(cell)
+
+##Writing Component Variant Array to template
+def writeIssueKeyToTemplate():
+    x = 2 
+    wb = load_workbook(filename = 'template_out.xlsx')
+    ws = wb.active
+    for i in IssueKey:
+        ws.cell(row = x, column = 3).value = i
+        x = x + 1
+    wb.save('template_out.xlsx')
+
+
 ##Test Function for inserting values
 ##def test():
     ##wb = load_workbook(filename = 'template_out.xlsx')
@@ -139,8 +173,9 @@ def writeDRNumberToTemplate():
 
         
 
-calcNumberOfRows()
+
 convert()
+calcNumberOfRows()
 create_Template()
 readToTitle()
 writeTitleToTemplate()
@@ -150,6 +185,6 @@ readToComponentVariant()
 writeComponentVariantToTemplate()
 readToDRNumber()
 writeDRNumberToTemplate()
-
-
-
+readToIssueKey()
+writeIssueKeyToTemplate()
+##style()
