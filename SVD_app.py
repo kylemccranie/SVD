@@ -14,18 +14,6 @@ IssueKey = []
 numberOfRows = 0
 
 
-#Styling
-##def style():
-##    wb = load_workbook('template_out.xlsx')
-##    ws = wb.active
-##   
-    ##fill = PatternFill(fill_type = 'solid',
-##                    ##start_color = 'f88379',
-##                   ## end_color = 'f88379')
-##    cell_range = ws['A1':'L1']
-##    cell_range.PatternFill(fill_type = 'solid',
-##                    start_color = 'f88379',
- ##                   end_color = 'f88379') 
 #caluculate max number of rows in excel sheet for later functions
 def calcNumberOfRows():
     global numberOfRows
